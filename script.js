@@ -3,47 +3,68 @@ const btnCheck = document.querySelector('.btn-check');
 const remark = document.querySelector('.span-remark');
 const missByDays = document.querySelector('.span-missDays');
 
+const clickHandler = (date)=>{
+
+    let isPalindrome = checkPalindrome(date);
+    let [isTrue,dateFormats] = [...isPalindrome];
+
+    if(isTrue){
+        console.log("Palindrome");
+        remark.textContent = "Yay ! Your birthdate is a Palindrom when in format: "+dateFormats;
+    }
+    else{
+        console.log("Is not a Palindrome");
+        remark.textContent = "Oops ! Your birthdate is not a Palindrome in any of the formats!";
+        checkforMissedDays(date);
+    }
+}
+
+
+function checkforMissedDays(date){
+    let dayCounter = 0;
+    let nextDayFormatted;
+    let isTrue = false;
+    while(!isTrue){
+        let nextDay = calculateNextDay(date); 
+        nextDayFormatted = formatNextDate(nextDay);
+        dayCounter++;
+        [isTrue,dateFormats] = checkPalindrome(nextDayFormatted);
+        date = nextDayFormatted;
+    }
+    missByDays.textContent = `You missed by ${dayCounter} days. The next palindrome date is ${nextDayFormatted}`;
+}
+
+
 const checkPalindrome = (inputDate) =>{
     const date = new Date(inputDate);
     let dateBreakDownArray = changeFormatToString(date);
     let day = dateBreakDownArray[0];
     let month = dateBreakDownArray[1];
     let fullYear = dateBreakDownArray[2];
-    // let day = date.getDate();
-    // let month = date.getMonth()+1;
-    // let fullYear = date.getFullYear();
-
-    // if(day<10){
-    //     day = "0" + day 
-    // }
-    // if(month<10)
-    //     month = "0" + month;
     
     const dateArray = getDateinAllFormats(day,month,fullYear);
     const isPalindrome = reverseAndCheck(dateArray);
     console.log(isPalindrome)
-    let [isTrue,dateFormats] = [...isPalindrome];
-    
-    if(isTrue){
-        console.log("Palindrome");
-        remark.textContent = "Yay ! Your birthdate is a Palindrom when in format: "+dateFormats;
-    }  
-    else
-    {
-        console.log("Is not a Palindrome");
-        remark.textContent = "Oops ! Your birthdate is not a Palindrome in any of the formats!";
-        let nextDay = calculateNextDay(date); 
-        let nextDayFormatted = ch(nextDay);
-        console.log("Next date is : "+nextDayFormatted);
-        checkPalindrome(nextDayFormatted);
-    } 
+    return isPalindrome;
+    // if(isTrue){
+    //     console.log("Palindrome");
+    //     remark.textContent = "Yay ! Your birthdate is a Palindrom when in format: "+dateFormats;
+    // }  
+    // else
+    // {
+    //     console.log("Is not a Palindrome");
+    //     remark.textContent = "Oops ! Your birthdate is not a Palindrome in any of the formats!";
+    //     let nextDay = calculateNextDay(date); 
+    //     let nextDayFormatted = ch(nextDay);
+    //     console.log("Next date is : "+nextDayFormatted);
+    //     checkPalindrome(nextDayFormatted);
+    // } 
 }
 
 function changeFormatToString(date){
     let day = date.getDate();
     let month = date.getMonth()+1;
     let fullYear = date.getFullYear();
-
     if(day<10)
         day = "0" + day 
     if(month<10)
@@ -51,11 +72,10 @@ function changeFormatToString(date){
     return [day,month,fullYear]
 }
 
-function ch(date){
+function formatNextDate(date){
     let day = date.getDate();
     let month = date.getMonth()+1;
     let fullYear = date.getFullYear();
-
     if(day<10)
         day = "0" + day 
     if(month<10)
@@ -70,23 +90,19 @@ function calculateNextDay(date){
         year: 'numeric',
         day:'numeric',
         month: 'numeric',
-        
     });
-    const dateParts = formattedDate.split("/");
-    let nextDate = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+    const dateParts = date.split("-");
+    let nextDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
     nextDate.setDate(nextDate.getDate() + 1);
-    // let nexty = nextDate.toISOString().split("T")[0];
-    // let xxx = new Date(nexty);
     return nextDate;
 }
+
 
 function reverseAndCheck(dateArray){
 let bool = false;
 let plaindromrFormatDate = [];
     dateArray.forEach((date)=>{
         let reversedDate = reverseDate(date);
-        // console.log("date is "+date+" reverse "+reversedDate)
-        // console.log(date == reversedDate)
         if(reversedDate == date){
             bool = true;
             plaindromrFormatDate.push(date);
@@ -97,9 +113,7 @@ let plaindromrFormatDate = [];
 
 function reverseDate(currentDate){
    return currentDate.split("").reverse().join("");
-    
 }
-
 
 
 function getDateinAllFormats(dd,mm,yyyy){
@@ -113,10 +127,6 @@ function getDateinAllFormats(dd,mm,yyyy){
 }
 
 
-
-
-
-
 btnCheck.addEventListener('click',()=>{
-    checkPalindrome(birthDate.value);
+    clickHandler(birthDate.value);
 });
