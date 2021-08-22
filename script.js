@@ -2,18 +2,21 @@ const birthDate = document.getElementById('birthDate');
 const btnCheck = document.querySelector('.btn-check');
 const remark = document.querySelector('.span-remark');
 const missByDays = document.querySelector('.span-missDays');
+const img = document.querySelector('.img-loading');
 
 const clickHandler = (date)=>{
 
     let isPalindrome = checkPalindrome(date);
     let [isTrue,dateFormats] = [...isPalindrome];
-
+    img.style.display = "none";
     if(isTrue){
         console.log("Palindrome");
+        remark.style.display = "inline-block";
         remark.textContent = "Yay ! Your birthdate is a Palindrom when in format: "+dateFormats;
     }
     else{
         console.log("Is not a Palindrome");
+        remark.style.display = "inline-block";
         remark.textContent = "Oops ! Your birthdate is not a Palindrome in any of the formats!";
         checkforMissedDays(date);
     }
@@ -31,6 +34,7 @@ function checkforMissedDays(date){
         [isTrue,dateFormats] = checkPalindrome(nextDayFormatted);
         date = nextDayFormatted;
     }
+    missByDays.style.display = "inline-block";
     missByDays.textContent = `You missed by ${dayCounter} days. The next palindrome date is ${nextDayFormatted}`;
 }
 
@@ -128,8 +132,17 @@ function getDateinAllFormats(dd,mm,yyyy){
 
 
 btnCheck.addEventListener('click',()=>{
-    if(birthDate.value == "")
-        remark.textContent = "Please enter your birthdate to continue";
-    else
-    clickHandler(birthDate.value);
+    remark.style.display = "none";
+    missByDays.style.display = "none";
+    if(birthDate.value == ""){
+        remark.style.display = "none";
+        remark.textContent = "Please enter your birthdate to continue.";
+    }
+    else{
+        img.style.display = "block";
+        setTimeout(()=>{
+            clickHandler(birthDate.value);
+        },3000)
+    }
+    
 });
