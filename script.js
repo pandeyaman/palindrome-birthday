@@ -135,7 +135,7 @@ btnCheck.addEventListener('click',()=>{
     remark.style.display = "none";
     missByDays.style.display = "none";
     if(birthDate.value == ""){
-        remark.style.display = "none";
+        remark.style.display = "inline-block";
         remark.textContent = "Please enter your birthdate to continue.";
     }
     else{
