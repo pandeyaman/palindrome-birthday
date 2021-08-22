@@ -128,5 +128,8 @@ function getDateinAllFormats(dd,mm,yyyy){
 
 
 btnCheck.addEventListener('click',()=>{
+    if(birthDate.value == "")
+        remark.textContent = "Please enter your birthdate to continue";
+    else
     clickHandler(birthDate.value);
 });

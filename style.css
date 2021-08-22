@@ -34,7 +34,7 @@ input[type="date"]{
     border-radius: 20px;
     padding: .5rem;
     font-size: 1.3rem;
-    margin: 1rem auto 2rem auto;
+    margin: 0rem auto 2rem auto;
     
 }
 
@@ -46,10 +46,35 @@ input[type="date"]{
     background-color: white;
     color: #0097e6;
     font-weight: 900;
-    margin: .5rem auto 1rem auto;
+    margin: 0rem auto 2rem auto;
+    cursor: pointer;
 }
+
+.btn-check:hover{
+   background-color: #0097e6;
+   color: white;
+   transition: 0.3s;
+}
+
+.btn-check:active{
+    box-shadow: rgba(50, 50, 93, 0.685) 0px 30px 60px -15px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+
 
 .div-remark{
     font-size: 1.5rem;
     color: #0079b9;
+    font-weight: 500;
+}
+
+footer{
+    width: 100%;
+    position: absolute;
+    bottom: 2rem;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.fab{
+    margin: 0 .5rem;
 }
