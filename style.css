@@ -68,11 +68,12 @@ input[type="date"]{
 }
 
 footer{
-    width: 100%;
+    width: 99%;
     position: absolute;
-    bottom: 2rem;
+    bottom: 0rem;
     text-align: center;
     font-size: 1.5rem;
+    padding: 2rem 0;
 }
 
 .fab{
